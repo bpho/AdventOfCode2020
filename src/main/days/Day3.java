@@ -1,5 +1,7 @@
 package main.days;
 
+import main.models.Day3Tuple;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -70,12 +72,16 @@ public class Day3 {
         System.out.println("Part 1 -- Num of trees hit: "+treesHit);
 
 //      Part 2: [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)] multiplied
-        long treesHit1 = day3.numOfTreesHit(tobogganMap, 1, 1);
-        long treesHit2 = day3.numOfTreesHit(tobogganMap, 3, 1);
-        long treesHit3 = day3.numOfTreesHit(tobogganMap, 5, 1);
-        long treesHit4 = day3.numOfTreesHit(tobogganMap, 7, 1);
-        long treesHit5 = day3.numOfTreesHit(tobogganMap, 1, 2);
-        long finalCount = treesHit1 * treesHit2 * treesHit3 * treesHit4 * treesHit5;
+        List<Day3Tuple> listOfTuples = new ArrayList<>();
+        listOfTuples.add(new Day3Tuple<>(1, 1));
+        listOfTuples.add(new Day3Tuple<>(3, 1));
+        listOfTuples.add(new Day3Tuple<>(5, 1));
+        listOfTuples.add(new Day3Tuple<>(7, 1));
+        listOfTuples.add(new Day3Tuple<>(1, 2));
+        long finalCount = 1;
+        for (Day3Tuple tuple : listOfTuples) {
+            finalCount = finalCount * day3.numOfTreesHit(tobogganMap, (Integer)tuple.x, (Integer)tuple.y);
+        }
         System.out.println("Part 2 -- Num of trees hit: "+finalCount);
     }
 }
