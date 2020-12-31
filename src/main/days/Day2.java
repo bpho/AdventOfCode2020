@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Day2 {
 
-    private static List<Day2Password> listOfPasswords = new ArrayList<>();
+    private static final List<Day2Password> listOfPasswords = new ArrayList<>();
 
     private int getInstanceCount(char letterOfInterest, String password) {
         int count = 0;

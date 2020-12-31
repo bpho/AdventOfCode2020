@@ -15,8 +15,8 @@ import java.util.List;
  */
 public class Day1 {
 
-    private static List<Integer> expenseEntries = new ArrayList<>();
-    final private int YEAR = 2020;
+    private static final List<Integer> expenseEntries = new ArrayList<>();
+    private static final int YEAR = 2020;
 
     private int retrieveProductPart1(List<Integer> expenseEntries){
         for (Integer entry : expenseEntries) {
