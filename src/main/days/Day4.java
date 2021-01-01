@@ -15,8 +15,8 @@ public class Day4 {
     private static final List<String> validEyeColors = Arrays.asList("amb", "blu", "brn", "gry", "grn", "hzl", "oth");
     private static final Map<String, String> yearRules = new HashMap<>();
     private static List<String> inputLines = new ArrayList<>();
-    private static List<String> organizedEntries = new ArrayList<>();
-    private static List<String> validPassports = new ArrayList<>();
+    private static final List<String> organizedEntries = new ArrayList<>();
+    private static final List<String> validPassports = new ArrayList<>();
     private final int REQUIRED_VALID_FIELDS = 7;
 
     private void buildList(String filePath) {
@@ -65,7 +65,73 @@ public class Day4 {
         return validIdsAfterCheck;
     }
 
-//  TODO: Potential to refactor if-else logic to separate functions
+//  byr, iyr, eyr
+    private boolean passYearCheck(String field, String value) {
+        if (value.length() == 4) {
+            int year = Integer.parseInt(value);
+            String[] yearRange = yearRules.get(field).split("-");
+            if (year >= Integer.parseInt(yearRange[0]) && year <= Integer.parseInt(yearRange[1])) {
+                return true;
+            }
+        }
+      return false;
+    }
+
+//  hgt
+    private boolean passHeightCheck(String value) {
+        String unit = value.substring(value.length()-2);
+        int measurement;
+        try {
+            measurement = Integer.parseInt(value.substring(0, value.length() - 2));
+        } catch (NumberFormatException nfe) {
+            System.err.println("Invalid measurement given: "+value);
+            return false;
+        }
+
+        if (unit.equals("cm")) {
+            if (measurement >= 150 && measurement <= 193) {
+                return true;
+            }
+        } else if (unit.equals("in")) {
+            if (measurement >= 59 && measurement <= 76) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+//  hcl
+    private boolean passHairColorCheck(String value) {
+        // a # followed by exactly six characters 0-9 or a-f. USE REGEX HERE
+        if (value.matches("^#([a-f0-9]{6})$")) {
+            return true;
+        }
+        return false;
+    }
+
+//  ecl
+    private boolean passEyeColorCheck(String value) {
+        // if (validEyeColors.stream().anyMatch(eyeColor -> passportValue.equals(eyeColor))) {
+        if (validEyeColors.stream().anyMatch(value::equals)) {
+            return true;
+        }
+        return false;
+    }
+
+//  pid
+    private boolean passPassportIdCheck(String value) {
+        if (value.length() == 9) {
+            try {
+                int intValue = Integer.parseInt(value);
+                return true;
+            } catch (NumberFormatException nfe) {
+                System.err.println("Passport value cannot be parsed to int: " +value);
+                return false;
+            }
+        }
+        return false;
+    }
+
     private boolean allChecksPass(String[] sections) {
         int numOfValidFields = 0;
         for (String section : sections) {
@@ -73,57 +139,20 @@ public class Day4 {
             String passportField = sectionSplit[0];
             String passportValue = sectionSplit[1];
 
-            if (yearFields.contains(passportField)) {
-                if (passportValue.length() == 4) {
-                    int year = Integer.valueOf(passportValue);
-                    String[] yearRange = yearRules.get(passportField).split("-");
-                    if (year >= Integer.valueOf(yearRange[0]) && year <= Integer.valueOf(yearRange[1])) {
-                        numOfValidFields++;
-                    }
-                }
-            } else if (passportField.equals("hgt")) {
-                String unit = passportValue.substring(passportValue.length()-2);
-                int measurement;
-                try {
-                    measurement = Integer.valueOf(passportValue.substring(0, passportValue.length() - 2));
-                } catch (NumberFormatException nfe) {
-                    System.err.println("Invalid measurement given: "+passportValue);
-                    continue;
-                }
-//                System.out.println("Height Measurement: " +measurement +" Height unit: " +unit);
-                if (unit.equals("cm")) {
-                    if (measurement >= 150 && measurement <= 193) {
-                        numOfValidFields++;
-                    }
-                } else if (unit.equals("in")) {
-                    if (measurement >= 59 && measurement <= 76) {
-                        numOfValidFields++;
-                    }
-                }
-            } else if (passportField.equals("hcl")) {
-//                a # followed by exactly six characters 0-9 or a-f. USE REGEX HERE
-                if (passportValue.matches("^#([a-f0-9]{6})$")) {
-                    numOfValidFields++;
-                }
-            } else if (passportField.equals("ecl")) {
-                // if (validEyeColors.stream().anyMatch(eyeColor -> passportValue.equals(eyeColor))) {
-                if (validEyeColors.stream().anyMatch(passportValue::equals)) {
-                    numOfValidFields++;
-                }
-            } else if (passportField.equals("pid")) {
-                if (passportValue.length() == 9) {
-                    try {
-                        int intValue = Integer.parseInt(passportValue);
-                        numOfValidFields++;
-                    } catch (NumberFormatException nfe) {
-                        System.err.println("Unparsable passport value to int: " +passportValue);
-                        continue;
-                    }
-                }
+            if (yearFields.contains(passportField) && passYearCheck(passportField, passportValue)) {
+                numOfValidFields++;
+            } else if (passportField.equals("hgt") && passHeightCheck(passportValue)) {
+                numOfValidFields++;
+            } else if (passportField.equals("hcl") && passHairColorCheck(passportValue)) {
+                numOfValidFields++;
+            } else if (passportField.equals("ecl") && passEyeColorCheck(passportValue)) {
+                numOfValidFields++;
+            } else if (passportField.equals("pid") && passPassportIdCheck(passportValue)) {
+                numOfValidFields++;
             }
         }
 
-        return (numOfValidFields == REQUIRED_VALID_FIELDS) ? true : false;
+        return numOfValidFields == REQUIRED_VALID_FIELDS;
     }
 
     public static void main(String[] args) {
