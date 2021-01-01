@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /*
 1. Store list of numbers in ArrayList
@@ -15,7 +16,7 @@ import java.util.List;
  */
 public class Day1 {
 
-    private static final List<Integer> expenseEntries = new ArrayList<>();
+    private static List<Integer> expenseEntries = new ArrayList<>();
     private static final int YEAR = 2020;
 
     private int retrieveProductPart1(List<Integer> expenseEntries){
@@ -58,9 +59,9 @@ public class Day1 {
 
     private void buildList(String filePath){
         try (BufferedReader reader = new BufferedReader(new FileReader(new File(filePath)))) {
-            reader.lines().forEach(entry -> {
-                expenseEntries.add(Integer.valueOf(entry));
-            });
+//          Casts each entry into an Integer then adds to List
+//          Map produces a new stream after applying a function to each element in the original "::" notation
+            expenseEntries = reader.lines().map(Integer::valueOf).collect(Collectors.toList());
         }
         catch (IOException e) {
             e.printStackTrace();

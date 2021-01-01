@@ -37,9 +37,7 @@ public class Day3 {
         while (traveledRow < numOfRows-1) {
             traveledRow = (traveledRow + yMovement);
             traveledCol = (traveledCol + xMovement) % numOfColumns;
-//            System.out.println("On Row: " +traveledRow +" and Column: " +traveledCol +" Landmark is: " +tobogganMap[traveledRow][traveledCol]);
             if (tobogganMap[traveledRow][traveledCol].equals("#")) {
-//                System.out.println("TREE HIT!");
                 treesHit++;
             }
         }
