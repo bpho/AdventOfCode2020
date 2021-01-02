@@ -58,7 +58,7 @@ public class Day1 {
     }
 
     private void buildList(String filePath){
-        try (BufferedReader reader = new BufferedReader(new FileReader(new File(filePath)))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
 //          Casts each entry into an Integer then adds to List
 //          Map produces a new stream after applying a function to each element in the original "::" notation
             expenseEntries = reader.lines().map(Integer::valueOf).collect(Collectors.toList());

@@ -71,7 +71,7 @@ public class Day2 {
     }
 
     private void buildList(String filePath){
-        try (BufferedReader reader = new BufferedReader(new FileReader(new File(filePath)))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             reader.lines().forEach(entry -> {
                 String[] passwordEntry = entry.split(" ");
                 Day2Password passwordRules = new Day2Password(passwordEntry[0], passwordEntry[1], passwordEntry[2]);

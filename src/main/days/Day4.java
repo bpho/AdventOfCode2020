@@ -20,7 +20,7 @@ public class Day4 {
     private final int REQUIRED_VALID_FIELDS = 7;
 
     private void buildList(String filePath) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(new File(filePath)))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             inputLines = reader.lines().collect(Collectors.toList());
         }
         catch (IOException e) {

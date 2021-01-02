@@ -45,7 +45,7 @@ public class Day3 {
     }
 
     private void buildList(String filePath){
-        try (BufferedReader reader = new BufferedReader(new FileReader(new File(filePath)))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             reader.lines().forEach(entry -> {
                 tobogganMapUnstructured.add(entry);
                 numOfColumns = entry.length();
