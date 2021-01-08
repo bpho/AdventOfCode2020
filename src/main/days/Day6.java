@@ -52,10 +52,9 @@ public class Day6 {
         int sumOfCount = 0;
         for (String groupAnswer : groupAnswers) {
             System.out.println("The group answer is: "+groupAnswer);
-            Set<Character> uniqueChar = new HashSet<>(groupAnswer
+            Set<Character> uniqueChar = groupAnswer
                     .chars()
-                    .mapToObj(c -> (char)c)
-                    .collect(Collectors.toSet()));
+                    .mapToObj(c -> (char) c).collect(Collectors.toSet());
             int uniqueYesCount = uniqueChar.size();
             sumOfCount += uniqueYesCount;
             System.out.println("Set values: " +uniqueChar);
