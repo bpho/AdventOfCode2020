@@ -1,25 +1,14 @@
 package main.days;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import util.Common;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Day6 {
 
-    private static List<String> inputLines = new ArrayList<>();
     private static final List<String> groupAnswersPart1 = new ArrayList<>();
     private static final List<List<String>> groupAnswersPart2 = new ArrayList<>();
-
-    private void buildList(String filePath) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            inputLines = reader.lines().collect(Collectors.toList());
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     private void organizeToGroups(List<String> inputLines) {
         String currentGroupPart1 = "";
@@ -101,7 +90,7 @@ public class Day6 {
     public static void main(String[] args) {
         String filePath = "src/resources/day6_input.txt";
         Day6 day6 = new Day6();
-        day6.buildList(filePath);
+        List<String> inputLines = Common.buildList(filePath);
         day6.organizeToGroups(inputLines);
         int numOfTotalYesPart1 = day6.determineNumUniqueYesPart1(groupAnswersPart1);
         System.out.println("Part 1 - Sum of total Yes: " +numOfTotalYesPart1);

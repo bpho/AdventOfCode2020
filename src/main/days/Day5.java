@@ -1,12 +1,10 @@
 package main.days;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import util.Common;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /*
  Read input file into ArrayList of seats
@@ -14,17 +12,7 @@ import java.util.stream.Collectors;
  */
 public class Day5 {
 
-    private static List<String> boardingPasses;
     private static final List<Integer> seatIds = new ArrayList<>();
-
-    private void buildList(String filePath) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            boardingPasses = reader.lines().collect(Collectors.toList());
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     private int determineHighestSeatId(List<String> boardingPasses) {
         int highestSeatValue = 0;
@@ -82,7 +70,7 @@ public class Day5 {
     public static void main(String[] args) {
         String filePath = "src/resources/day5_input.txt";
         Day5 day5 = new Day5();
-        day5.buildList(filePath);
+        List<String> boardingPasses = Common.buildList(filePath);
         int highestSeatId = day5.determineHighestSeatId(boardingPasses);
         System.out.println("Part 1 - Highest Seat ID is: " +highestSeatId);
 

@@ -1,11 +1,8 @@
 package main.days;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import util.Common;
+
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Day4 {
@@ -14,19 +11,9 @@ public class Day4 {
     private static final List<String> yearFields = Arrays.asList("byr", "iyr", "eyr");
     private static final List<String> validEyeColors = Arrays.asList("amb", "blu", "brn", "gry", "grn", "hzl", "oth");
     private static final Map<String, String> yearRules = new HashMap<>();
-    private static List<String> inputLines = new ArrayList<>();
     private static final List<String> organizedEntries = new ArrayList<>();
     private static final List<String> validPassports = new ArrayList<>();
     private final int REQUIRED_VALID_FIELDS = 7;
-
-    private void buildList(String filePath) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            inputLines = reader.lines().collect(Collectors.toList());
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     private void groupItems(List<String> inputLines) {
         String workingEntry = "";
@@ -158,8 +145,9 @@ public class Day4 {
     public static void main(String[] args) {
         String filePath = "src/resources/day4_input.txt";
         Day4 day4 = new Day4();
-        day4.buildList(filePath);
+        List<String> inputLines = Common.buildList(filePath);
         day4.groupItems(inputLines);
+
         int numOfValidIds = day4.getNumOfValidIds(organizedEntries);
         System.out.println("Part 1 - Total num of valid ids: "+numOfValidIds);
 
