@@ -125,6 +125,7 @@ public class Day8 {
             String instructionKey = instruction.getInstructionKey();
             int instructionIndex = instruction.getIndex();
             int instructionValue = instruction.getInstructionValue();
+            // Create the new instruction to replace in the original list
             ConsoleInstruction newInstruction = new ConsoleInstruction(instructionIndex, instructionKey, instructionValue);
             if (instructionKey.equals("jmp")) {
                 newInstruction.setInstructionKey("nop");
